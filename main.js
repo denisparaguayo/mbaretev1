@@ -10,8 +10,8 @@ const CONFIG = {
   whatsapp: '595986550235',
   mensajeWA: 'Hola Mbarete Digital! Quiero consultar sobre una página web para mi negocio 👋',
   horarioDesde: 8,       // hora apertura (formato 24h, hora Paraguay)
-  horarioHasta: 18,      // hora cierre
-  diasHabiles: [1,2,3,4,5], // 1=lunes ... 7=domingo (JS: 0=domingo ... 6=sábado)
+  horarioHasta: 22,      // hora cierre
+  diasHabiles: [1,2,3,4,5,6], // 1=lunes ... 7=domingo (JS: 0=domingo ... 6=sábado)
 };
 
 // ────────────────────────────────────────
@@ -75,12 +75,23 @@ function initNavbar() {
   const navbar = document.getElementById('navbar');
   if (!navbar) return;
 
+  // Cachear altura del navbar para evitar reflow en scroll
+  let navHeight = navbar.offsetHeight;
+
+  // Actualizar caché solo al redimensionar (no en cada scroll)
+  window.addEventListener('resize', () => {
+    navHeight = navbar.offsetHeight;
+  }, { passive: true });
+
   function updateNavbar() {
     navbar.classList.toggle('scrolled', window.scrollY > 50);
   }
 
-  updateNavbar(); // ejecutar al cargar
+  updateNavbar();
   window.addEventListener('scroll', updateNavbar, { passive: true });
+
+  // Exportar altura para smooth scroll
+  navbar._cachedHeight = () => navHeight;
 }
 
 // ────────────────────────────────────────
@@ -115,6 +126,11 @@ function initHamburger() {
       toggleMenu(false);
     }
   });
+
+  // Cerrar si se pasa a desktop (fix overflow bloqueado)
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 768) toggleMenu(false);
+  }, { passive: true });
 }
 
 // ────────────────────────────────────────
@@ -249,16 +265,22 @@ function initFAQ() {
 // 8. SMOOTH SCROLL para links del navbar
 // ────────────────────────────────────────
 function initSmoothScroll() {
+  // Leer altura del navbar UNA vez, no en cada click
+  const navbar = document.getElementById('navbar');
+
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', e => {
       const href = link.getAttribute('href');
-      if (!href || href === '#') return; // links de WA no tienen # como destino
+      if (!href || href === '#') return;
 
-      const target = document.querySelector(href);
+      let target;
+      try { target = document.querySelector(href); } catch(err) { return; }
       if (!target) return;
 
       e.preventDefault();
-      const navHeight = document.getElementById('navbar')?.offsetHeight || 0;
+
+      // Usar altura cacheada para evitar reflow forzado
+      const navHeight = navbar?._cachedHeight?.() ?? navbar?.offsetHeight ?? 0;
       const top = target.getBoundingClientRect().top + window.scrollY - navHeight - 12;
       window.scrollTo({ top, behavior: 'smooth' });
     });

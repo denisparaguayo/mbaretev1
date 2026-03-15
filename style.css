@@ -12,6 +12,7 @@
   --azul-medio: #1a3a6b;
   --azul-card: #162c54;
   --verde: #059669;
+  --verde-btn: #047857;      /* más oscuro para contraste WCAG AA con blanco */
   --verde-claro: #34d399;
   --verde-hover: #047857;
   --blanco: #ffffff;
@@ -19,11 +20,11 @@
   --gris-medio: #e2e8f0;
   --texto: #1e293b;
   --texto-muted: #64748b;
-  --texto-light: rgba(255,255,255,0.75);
+  --texto-light: rgba(255,255,255,0.88);
 
   /* Tipografía */
-  --font-titulo: 'Fraunces', Georgia, serif;
-  --font-cuerpo: 'Mulish', sans-serif;
+  --font-titulo: 'Georgia', 'Charter', 'Palatino Linotype', serif;
+  --font-cuerpo: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
 
   /* Radios */
   --radius-sm: 8px;
@@ -166,14 +167,14 @@ button {
 }
 
 .btn--primary {
-  background: var(--verde);
+  background: var(--verde-btn);
   color: var(--blanco);
   box-shadow: var(--shadow-verde);
 }
 
 .btn--primary:hover,
 .btn--primary:focus-visible {
-  background: var(--verde-hover);
+  background: #065f46;
   transform: translateY(-2px);
   box-shadow: 0 6px 28px rgba(5,150,105,0.45);
 }
@@ -1306,7 +1307,7 @@ button {
 
 .footer__bottom p {
   font-size: 0.8rem;
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.6);
   font-weight: 500;
 }
 
@@ -1327,7 +1328,8 @@ button {
   font-weight: 700;
   font-size: 0.9rem;
   text-decoration: none;
-  transition: all var(--transition);
+  transition: transform var(--transition), box-shadow var(--transition);
+  will-change: transform;
   animation: waPulse 2.5s infinite;
 }
 
@@ -1355,9 +1357,10 @@ button {
 }
 
 /* === KEYFRAMES === */
+/* waPulse usa solo transform — compositable por GPU, sin reflow ni CLS */
 @keyframes waPulse {
-  0%, 100% { box-shadow: 0 4px 24px rgba(5,150,105,0.5); }
-  50%       { box-shadow: 0 4px 32px rgba(5,150,105,0.75), 0 0 0 8px rgba(5,150,105,0.12); }
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.06); }
 }
 
 @keyframes pulseDot {
@@ -1520,7 +1523,7 @@ button {
   }
 }
 
-  /* ============================================================ */
+   ============================================================ */
 @media (min-width: 480px) {
   .hero__stats {
     max-width: 100%;
