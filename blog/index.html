@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="es-PY">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Blog | Diseño Web y SEO en Paraguay — Mbarete Digital</title>
+		<meta
+			name="description"
+			content="Artículos sobre diseño web, SEO y cómo conseguir clientes con una página web en Paraguay. Consejos reales para negocios en Asunción y todo el país." />
+		<meta
+			name="keywords"
+			content="blog diseño web Paraguay, SEO Paraguay blog, consejos página web Paraguay, marketing digital Paraguay" />
+		<link rel="canonical" href="https://mbaretedigital.netlify.app/blog/" />
+		<link rel="icon" type="image/x-icon" href="../favicon.ico" />
+		<link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+		<meta name="theme-color" content="#0a1628" />
+		<meta
+			property="og:title"
+			content="Blog — Diseño Web y SEO en Paraguay | Mbarete Digital" />
+		<meta
+			property="og:description"
+			content="Consejos reales sobre diseño web y SEO para negocios en Paraguay." />
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="es_PY" />
+		<meta property="og:url" content="https://mbaretedigital.netlify.app/blog/" />
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "Blog",
+				"name": "Blog Mbarete Digital",
+				"description": "Artículos sobre diseño web y SEO para negocios en Paraguay",
+				"url": "https://mbaretedigital.netlify.app/blog/",
+				"publisher": {
+					"@type": "Organization",
+					"name": "Mbarete Digital",
+					"url": "https://mbaretedigital.netlify.app"
+				}
+			}
+		</script>
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "BreadcrumbList",
+				"itemListElement": [
+					{
+						"@type": "ListItem",
+						"position": 1,
+						"name": "Inicio",
+						"item": "https://mbaretedigital.netlify.app/"
+					},
+					{
+						"@type": "ListItem",
+						"position": 2,
+						"name": "Blog",
+						"item": "https://mbaretedigital.netlify.app/blog/"
+					}
+				]
+			}
+		</script>
+		<link rel="stylesheet" href="../style.css" />
+		<style>
+			.blog-hero {
+				background: linear-gradient(
+					160deg,
+					var(--azul-oscuro) 0%,
+					var(--azul-medio) 100%
+				);
+				padding: 120px 20px 72px;
+				position: relative;
+				overflow: hidden;
+			}
+			.blog-hero::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				background:
+					radial-gradient(
+						circle at 20% 60%,
+						rgba(5, 150, 105, 0.1) 0%,
+						transparent 55%
+					),
+					repeating-linear-gradient(
+						0deg,
+						transparent,
+						transparent 40px,
+						rgba(255, 255, 255, 0.015) 40px,
+						rgba(255, 255, 255, 0.015) 41px
+					),
+					repeating-linear-gradient(
+						90deg,
+						transparent,
+						transparent 40px,
+						rgba(255, 255, 255, 0.015) 40px,
+						rgba(255, 255, 255, 0.015) 41px
+					);
+				pointer-events: none;
+			}
+			.blog-hero__inner {
+				max-width: 860px;
+				margin: 0 auto;
+				position: relative;
+				z-index: 1;
+			}
+			.blog-hero__badge {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				background: rgba(255, 255, 255, 0.1);
+				border: 1px solid rgba(255, 255, 255, 0.18);
+				color: rgba(255, 255, 255, 0.88);
+				font-size: 0.78rem;
+				font-weight: 700;
+				padding: 5px 14px;
+				border-radius: var(--radius-pill);
+				margin-bottom: 20px;
+				letter-spacing: 0.03em;
+			}
+			.blog-hero h1 {
+				font-family: var(--font-titulo);
+				font-weight: 900;
+				font-size: clamp(2rem, 5vw, 3rem);
+				color: var(--blanco);
+				line-height: 1.12;
+				margin-bottom: 16px;
+			}
+			.blog-hero h1 em {
+				color: var(--verde-claro);
+				font-style: italic;
+			}
+			.blog-hero__sub {
+				font-size: 1.05rem;
+				color: rgba(255, 255, 255, 0.75);
+				line-height: 1.7;
+				max-width: 580px;
+				margin-bottom: 28px;
+				font-weight: 500;
+			}
+			.blog-hero__stats {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 10px;
+			}
+			.blog-hero__stat {
+				background: rgba(255, 255, 255, 0.08);
+				border: 1px solid rgba(255, 255, 255, 0.12);
+				border-radius: var(--radius-pill);
+				padding: 6px 16px;
+				font-size: 0.82rem;
+				font-weight: 700;
+				color: rgba(255, 255, 255, 0.82);
+			}
+			.blog-hero__stat span {
+				color: var(--verde-claro);
+			}
+
+			.blog-filters {
+				background: var(--blanco);
+				border-bottom: 1px solid var(--gris-medio);
+				position: sticky;
+				top: 57px;
+				z-index: 40;
+				box-shadow: 0 2px 8px rgba(10, 22, 40, 0.06);
+			}
+			.blog-filters__inner {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 12px 20px;
+				display: flex;
+				gap: 8px;
+				overflow-x: auto;
+				scrollbar-width: none;
+			}
+			.blog-filters__inner::-webkit-scrollbar {
+				display: none;
+			}
+			.fcat {
+				display: inline-flex;
+				align-items: center;
+				gap: 5px;
+				padding: 7px 16px;
+				border-radius: var(--radius-pill);
+				font-size: 0.82rem;
+				font-weight: 700;
+				white-space: nowrap;
+				border: 1.5px solid var(--gris-medio);
+				color: var(--texto-muted);
+				background: var(--blanco);
+				cursor: pointer;
+				transition: all var(--transition);
+				flex-shrink: 0;
+			}
+			.fcat:hover {
+				border-color: var(--verde);
+				color: var(--verde);
+				background: #f0fdf8;
+			}
+			.fcat.on {
+				background: var(--verde);
+				border-color: var(--verde);
+				color: var(--blanco);
+			}
+
+			.blog-main {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 48px 20px 96px;
+			}
+			.breadcrumb {
+				font-size: 0.82rem;
+				color: var(--texto-muted);
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 16px 20px 0;
+			}
+			.breadcrumb a {
+				color: var(--verde);
+			}
+
+			.art-featured {
+				display: grid;
+				grid-template-columns: 1fr;
+				background: var(--blanco);
+				border: 1.5px solid var(--gris-medio);
+				border-radius: var(--radius-xl);
+				overflow: hidden;
+				margin-bottom: 48px;
+				transition: all var(--transition);
+				text-decoration: none;
+			}
+			.art-featured:hover {
+				transform: translateY(-3px);
+				box-shadow: var(--shadow-lg);
+				border-color: var(--verde-claro);
+			}
+			.art-featured__img {
+				background: linear-gradient(
+					135deg,
+					var(--azul-oscuro),
+					var(--azul-medio)
+				);
+				min-height: 180px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 5rem;
+			}
+			.art-featured__body {
+				padding: 32px;
+				display: flex;
+				flex-direction: column;
+				gap: 14px;
+			}
+			.art-featured__badges {
+				display: flex;
+				gap: 8px;
+				flex-wrap: wrap;
+			}
+			.art-badge {
+				display: inline-flex;
+				align-items: center;
+				gap: 4px;
+				font-size: 0.72rem;
+				font-weight: 700;
+				padding: 4px 12px;
+				border-radius: var(--radius-pill);
+				background: rgba(5, 150, 105, 0.08);
+				color: var(--verde-hover);
+				border: 1px solid rgba(5, 150, 105, 0.18);
+			}
+			.art-badge--star {
+				background: rgba(234, 179, 8, 0.1);
+				color: #92400e;
+				border-color: rgba(234, 179, 8, 0.25);
+			}
+			.art-featured h2 {
+				font-family: var(--font-titulo);
+				font-weight: 900;
+				font-size: clamp(1.5rem, 3vw, 2rem);
+				color: var(--texto);
+				line-height: 1.2;
+			}
+			.art-featured__desc {
+				font-size: 1rem;
+				color: var(--texto-muted);
+				line-height: 1.7;
+			}
+			.art-featured__meta {
+				font-size: 0.78rem;
+				color: var(--texto-muted);
+				font-weight: 600;
+			}
+			.art-featured__cta {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				background: #047857;
+				color: var(--blanco);
+				font-weight: 700;
+				font-size: 0.9rem;
+				padding: 11px 24px;
+				border-radius: var(--radius-pill);
+				width: fit-content;
+				transition: all var(--transition);
+			}
+			.art-featured__cta:hover {
+				background: #065f46;
+				transform: translateY(-1px);
+			}
+
+			.arts-section-title {
+				font-family: var(--font-titulo);
+				font-weight: 700;
+				font-size: 1.2rem;
+				color: var(--texto);
+				margin-bottom: 20px;
+				padding-bottom: 12px;
+				border-bottom: 2px solid var(--gris-medio);
+			}
+			.arts-grid {
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: 20px;
+			}
+			.art-card {
+				background: var(--blanco);
+				border: 1.5px solid var(--gris-medio);
+				border-radius: var(--radius-lg);
+				padding: 24px;
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+				transition: all var(--transition);
+				text-decoration: none;
+			}
+			.art-card:hover {
+				transform: translateY(-3px);
+				box-shadow: var(--shadow-md);
+				border-color: var(--verde-claro);
+			}
+			.art-card__top {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 8px;
+			}
+			.art-card__cat {
+				font-size: 0.72rem;
+				font-weight: 700;
+				color: var(--verde-hover);
+				background: rgba(5, 150, 105, 0.08);
+				border: 1px solid rgba(5, 150, 105, 0.15);
+				padding: 3px 10px;
+				border-radius: var(--radius-pill);
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
+			}
+			.art-card__time {
+				font-size: 0.75rem;
+				color: var(--texto-muted);
+				font-weight: 600;
+			}
+			.art-card__title {
+				font-family: var(--font-titulo);
+				font-weight: 700;
+				font-size: 1.05rem;
+				color: var(--texto);
+				line-height: 1.3;
+			}
+			.art-card__desc {
+				font-size: 0.875rem;
+				color: var(--texto-muted);
+				line-height: 1.6;
+				flex: 1;
+			}
+			.art-card__footer {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-top: 4px;
+			}
+			.art-card__link {
+				font-size: 0.83rem;
+				font-weight: 700;
+				color: var(--verde);
+			}
+			.art-card__date {
+				font-size: 0.75rem;
+				color: var(--texto-muted);
+			}
+
+			.blog-cta {
+				background: linear-gradient(
+					135deg,
+					var(--azul-oscuro) 0%,
+					var(--azul-medio) 100%
+				);
+				border-radius: var(--radius-xl);
+				padding: 48px 36px;
+				text-align: center;
+				margin-top: 56px;
+			}
+			.blog-cta h2 {
+				font-family: var(--font-titulo);
+				font-weight: 900;
+				font-size: clamp(1.5rem, 3vw, 2rem);
+				color: var(--blanco);
+				margin-bottom: 10px;
+			}
+			.blog-cta p {
+				color: rgba(255, 255, 255, 0.75);
+				margin-bottom: 28px;
+				font-size: 1rem;
+			}
+
+			.empty-msg {
+				display: none;
+				text-align: center;
+				padding: 48px 20px;
+				color: var(--texto-muted);
+				font-size: 1rem;
+			}
+			.empty-msg.visible {
+				display: block;
+			}
+
+			@media (min-width: 640px) {
+				.arts-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+			@media (min-width: 900px) {
+				.art-featured {
+					grid-template-columns: 1fr 1.5fr;
+				}
+				.art-featured__img {
+					min-height: auto;
+				}
+			}
+			@media (min-width: 1024px) {
+				.arts-grid {
+					grid-template-columns: repeat(4, 1fr);
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- NAVBAR -->
+		<nav
+			class="navbar"
+			id="navbar"
+			role="navigation"
+			aria-label="Menú principal">
+			<div class="navbar__container">
+				<a
+					href="../"
+					class="navbar__logo"
+					aria-label="Mbarete Digital — Inicio">
+					<span aria-hidden="true">⚡</span>
+					<span class="navbar__logo-text">Mbarete Digital</span>
+				</a>
+				<button
+					class="navbar__hamburger"
+					id="hamburger"
+					aria-label="Abrir menú"
+					aria-expanded="false"
+					aria-controls="nav-links">
+					<span class="hamburger__bar"></span>
+					<span class="hamburger__bar"></span>
+					<span class="hamburger__bar"></span>
+				</button>
+				<ul class="navbar__links" id="nav-links" role="list">
+					<li><a href="../#servicios" class="navbar__link">Servicios</a></li>
+					<li><a href="../#precios" class="navbar__link">Precios</a></li>
+					<li><a href="../muestras/" class="navbar__link">Muestras</a></li>
+					<li>
+						<a href="./" class="navbar__link navbar__link--highlight"
+							>✍️ Blog</a
+						>
+					</li>
+					<li><a href="../#contacto" class="navbar__link">Contacto</a></li>
+				</ul>
+				<a href="#" class="btn btn--whatsapp navbar__cta" id="navbar-wa"
+					>💬 WhatsApp</a
+				>
+			</div>
+		</nav>
+
+		<!-- HERO -->
+		<header class="blog-hero" role="banner">
+			<div class="blog-hero__inner">
+				<div class="blog-hero__badge">✍️ Blog de Mbarete Digital</div>
+				<h1>Diseño web y SEO en Paraguay<br /><em>para tu negocio.</em></h1>
+				<p class="blog-hero__sub">
+					Consejos reales, sin vueltas, para que tu negocio aparezca en Google y
+					consiga más clientes por internet.
+				</p>
+				<div class="blog-hero__stats">
+					<div class="blog-hero__stat"><span>5</span> artículos</div>
+					<div class="blog-hero__stat">SEO · Diseño · Marketing</div>
+					<div class="blog-hero__stat">Paraguay 🇵🇾</div>
+				</div>
+			</div>
+		</header>
+
+		<!-- BREADCRUMB -->
+		<nav class="breadcrumb" aria-label="Breadcrumb">
+			<a href="../">Inicio</a> › Blog
+		</nav>
+
+		<!-- FILTROS -->
+		<div class="blog-filters" role="navigation" aria-label="Filtrar artículos">
+			<div class="blog-filters__inner">
+				<button class="fcat on" data-cat="todos">🔥 Todos</button>
+				<button class="fcat" data-cat="precios">💰 Precios</button>
+				<button class="fcat" data-cat="seo">🔍 SEO</button>
+				<button class="fcat" data-cat="marketing">📣 Marketing</button>
+				<button class="fcat" data-cat="conceptos">💡 Conceptos</button>
+				<button class="fcat" data-cat="guia">📋 Guías</button>
+			</div>
+		</div>
+
+		<!-- CONTENIDO PRINCIPAL -->
+		<main class="blog-main" id="main-content">
+			<!-- ARTÍCULO DESTACADO -->
+			<a
+				href="cuanto-cuesta-pagina-web-paraguay/"
+				class="art-featured"
+				data-cat="precios"
+				aria-label="Leer: ¿Cuánto cuesta una página web en Paraguay?">
+				<div class="art-featured__img" aria-hidden="true">💰</div>
+				<div class="art-featured__body">
+					<div class="art-featured__badges">
+						<span class="art-badge art-badge--star">⭐ Destacado</span>
+						<span class="art-badge">💰 Precios</span>
+					</div>
+					<h2>
+						¿Cuánto cuesta una página web en Paraguay? Guía de precios 2025
+					</h2>
+					<p class="art-featured__desc">
+						Guía completa con todos los precios del mercado paraguayo: desde Gs.
+						800.000 hasta Gs. 15 millones. Qué incluye cada opción y cuál
+						conviene para tu tipo de negocio.
+					</p>
+					<div class="art-featured__meta">
+						Por Mbarete Digital · Enero 2025 · 5 min de lectura
+					</div>
+					<span class="art-featured__cta">Leer artículo completo →</span>
+				</div>
+			</a>
+
+			<!-- GRILLA DE ARTÍCULOS -->
+			<h2 class="arts-section-title">Todos los artículos</h2>
+			<div class="arts-grid" id="arts-grid" role="list">
+				<a
+					href="conseguir-clientes-pagina-web-paraguay/"
+					class="art-card"
+					data-cat="marketing"
+					role="listitem">
+					<div class="art-card__top">
+						<span class="art-card__cat">Marketing</span>
+						<span class="art-card__time">6 min</span>
+					</div>
+					<div class="art-card__title">
+						Cómo conseguir clientes con una página web
+					</div>
+					<p class="art-card__desc">
+						5 estrategias que usan los negocios paraguayos para convertir
+						visitas en clientes reales: SEO local, WhatsApp, testimonios y más.
+					</p>
+					<div class="art-card__footer">
+						<span class="art-card__link">Leer →</span>
+						<span class="art-card__date">Ene 2025</span>
+					</div>
+				</a>
+
+				<a
+					href="landing-page-vs-pagina-web/"
+					class="art-card"
+					data-cat="conceptos"
+					role="listitem">
+					<div class="art-card__top">
+						<span class="art-card__cat">Conceptos</span>
+						<span class="art-card__time">5 min</span>
+					</div>
+					<div class="art-card__title">
+						Landing page vs página web: ¿cuál necesita tu negocio?
+					</div>
+					<p class="art-card__desc">
+						La diferencia clave y cómo elegir la opción correcta según tu
+						objetivo y presupuesto en Paraguay.
+					</p>
+					<div class="art-card__footer">
+						<span class="art-card__link">Leer →</span>
+						<span class="art-card__date">Ene 2025</span>
+					</div>
+				</a>
+
+				<a
+					href="aparecer-en-google-paraguay/"
+					class="art-card"
+					data-cat="seo"
+					role="listitem">
+					<div class="art-card__top">
+						<span class="art-card__cat">SEO</span>
+						<span class="art-card__time">7 min</span>
+					</div>
+					<div class="art-card__title">
+						Qué necesita tu empresa para aparecer en Google Paraguay
+					</div>
+					<p class="art-card__desc">
+						Los 7 pasos concretos para que tu negocio aparezca en los primeros
+						resultados de búsqueda en Paraguay.
+					</p>
+					<div class="art-card__footer">
+						<span class="art-card__link">Leer →</span>
+						<span class="art-card__date">Ene 2025</span>
+					</div>
+				</a>
+
+				<a
+					href="como-crear-pagina-web-profesional/"
+					class="art-card"
+					data-cat="guia"
+					role="listitem">
+					<div class="art-card__top">
+						<span class="art-card__cat">Guía</span>
+						<span class="art-card__time">8 min</span>
+					</div>
+					<div class="art-card__title">
+						Cómo crear una página web profesional para tu negocio
+					</div>
+					<p class="art-card__desc">
+						Todo lo que necesitás saber: dominio, hosting, diseño, SEO y los
+						errores más comunes a evitar en Paraguay.
+					</p>
+					<div class="art-card__footer">
+						<span class="art-card__link">Leer →</span>
+						<span class="art-card__date">Ene 2025</span>
+					</div>
+				</a>
+			</div>
+
+			<div class="empty-msg" id="empty-msg" role="status">
+				No hay artículos en esa categoría todavía. ¡Próximamente!
+			</div>
+
+			<!-- CTA FINAL -->
+			<div class="blog-cta">
+				<h2>¿Querés una página web para tu negocio?</h2>
+				<p>
+					Aplicá lo que aprendiste o dejanos hacerlo por vos — desde Gs.
+					800.000.
+				</p>
+				<a href="#" class="btn btn--primary btn--lg" id="cta-wa"
+					>💬 Consultá por WhatsApp</a
+				>
+			</div>
+		</main>
+
+		<!-- FOOTER -->
+		<footer
+			style="
+				background: var(--azul-oscuro);
+				border-top: 1px solid rgba(255, 255, 255, 0.06);
+				padding: 28px 20px;
+				text-align: center;
+			"
+			role="contentinfo">
+			<p
+				style="
+					color: rgba(255, 255, 255, 0.5);
+					font-size: 0.8rem;
+					font-weight: 500;
+				">
+				© 2025 Mbarete Digital · Asunción, Paraguay ·
+				<a href="../" style="color: var(--verde-claro)">Volver al sitio</a>
+			</p>
+		</footer>
+
+		<!-- WHATSAPP FLOTANTE -->
+		<a
+			href="#"
+			class="wa-float"
+			id="wa-float"
+			aria-label="Contactar por WhatsApp"
+			target="_blank"
+			rel="noopener">
+			<span class="wa-float__icon" aria-hidden="true">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 24 24"
+					fill="currentColor">
+					<path
+						d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+				</svg>
+			</span>
+			<span class="wa-float__text">¡Escribinos!</span>
+		</a>
+
+		<script src="../main.js" defer></script>
+		<script>
+			// Filtro de categorías
+			document.querySelectorAll('.fcat').forEach((btn) => {
+				btn.addEventListener('click', () => {
+					document
+						.querySelectorAll('.fcat')
+						.forEach((b) => b.classList.remove('on'));
+					btn.classList.add('on');
+					const cat = btn.getAttribute('data-cat');
+					let visible = 0;
+
+					document.querySelectorAll('.art-card').forEach((card) => {
+						const match =
+							cat === 'todos' || card.getAttribute('data-cat') === cat;
+						card.style.display = match ? 'flex' : 'none';
+						if (match) visible++;
+					});
+
+					const featured = document.querySelector('.art-featured');
+					if (featured) {
+						const match =
+							cat === 'todos' || featured.getAttribute('data-cat') === cat;
+						featured.style.display = match ? '' : 'none';
+						if (match) visible++;
+					}
+
+					document
+						.getElementById('empty-msg')
+						.classList.toggle('visible', visible === 0);
+				});
+			});
+		</script>
+	</body>
+</html>
