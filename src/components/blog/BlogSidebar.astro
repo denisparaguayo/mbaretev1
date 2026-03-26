@@ -1,0 +1,53 @@
+---
+import { getWhatsAppUrl } from '../../data/siteConfig';
+
+const { posts = [], categories = [] } = Astro.props;
+---
+
+<aside class="blog-sidebar">
+	<div class="blog-sidebar__box blog-sidebar__box--cta">
+		<span class="badge badge--blog">🚀 Mbarete Digital</span>
+		<h3>¿Querés una web que te genere clientes?</h3>
+		<p>Creamos páginas web rápidas, profesionales y optimizadas para Google.</p>
+		<a
+			href={getWhatsAppUrl(
+				'Hola Mbarete Digital! Vi el blog y quiero una página web para mi negocio 👋'
+			)}
+			class="btn btn--primary btn--lg"
+			target="_blank"
+			rel="noopener noreferrer">
+			💬 Consultar ahora
+		</a>
+	</div>
+
+	<div class="blog-sidebar__box">
+		<h3 class="blog-sidebar__title">Posts recientes</h3>
+		<ul class="blog-sidebar__list">
+			{
+				posts.slice(0, 5).map((post) => {
+					const slug = post.id.replace(/\.(md|mdx)$/, '');
+					return (
+						<li>
+							<a href={`/blog/${slug}/`}>{post.data.title}</a>
+						</li>
+					);
+				})
+			}
+		</ul>
+	</div>
+
+	<div class="blog-sidebar__box">
+		<h3 class="blog-sidebar__title">Categorías</h3>
+		<div class="blog-sidebar__tags">
+			{
+				categories.map((category) => (
+					<a
+						href={`/blog/categoria/${category.slug}/`}
+						class="blog-sidebar__tag">
+						{category.name}
+					</a>
+				))
+			}
+		</div>
+	</div>
+</aside>

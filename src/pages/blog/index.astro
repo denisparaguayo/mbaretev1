@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { siteConfig } from '../../data/siteConfig';
+import { getCollection } from 'astro:content';
+
+import FeaturedPost from '../../components/blog/FeaturedPost.astro';
+import BlogGrid from '../../components/blog/BlogGrid.astro';
+import BlogSidebar from '../../components/blog/BlogSidebar.astro';
+
+const allPosts = (await getCollection('blog'))
+	.filter((post) => !post.data.draft)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const featuredPost = allPosts.find((post) => post.data.featured) || allPosts[0];
+
+const regularPosts = allPosts.filter((post) => post.id !== featuredPost?.id);
+
+const categories = [
+	...new Map(
+		allPosts
+			.filter((post) => post.data.category && post.data.categorySlug)
+			.map((post) => [
+				post.data.categorySlug,
+				{
+					name: post.data.category,
+					slug: post.data.categorySlug,
+				},
+			])
+	).values(),
+];
+
+const blogSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Blog',
+	name: 'Blog de Mbarete Digital',
+	description:
+		'Artículos sobre diseño web, SEO en Paraguay, páginas para negocios y marketing digital.',
+	url: `${siteConfig.url}/blog/`,
+};
+---
+
+<BaseLayout
+	title="Blog | Mbarete Digital"
+	description="Artículos sobre diseño web, SEO en Paraguay, páginas para negocios y marketing digital."
+	canonical={`${siteConfig.url}/blog/`}
+	schema={blogSchema}
+	navbarSolid={true}>
+	<section
+		class="section section--white blog-home"
+		aria-labelledby="blog-title">
+		<div class="container">
+			<div class="blog-home__hero fade-up">
+				<span class="badge badge--blog">📝 Blog</span>
+				<h1 class="section__title" id="blog-title">Blog de Mbarete Digital</h1>
+				<p class="section__subtitle">
+					Ideas, estrategias y guías para conseguir clientes con tu presencia
+					digital en Paraguay.
+				</p>
+			</div>
+
+			{
+				featuredPost && (
+					<div class="fade-up">
+						<FeaturedPost post={featuredPost} />
+					</div>
+				)
+			}
+
+			<div class="blog-home__layout">
+				<div class="blog-home__main fade-up">
+					<BlogGrid posts={regularPosts} />
+				</div>
+
+				<div class="blog-home__side fade-up">
+					<BlogSidebar posts={allPosts} categories={categories} />
+				</div>
+			</div>
+		</div>
+	</section>
+</BaseLayout>

@@ -1,0 +1,73 @@
+---
+const {
+	title = '¿Querés una auditoría gratis para tu negocio?',
+	desc = 'Decinos tu rubro y te orientamos por WhatsApp sobre qué tipo de página web te conviene.',
+	buttonText = 'Quiero mi auditoría',
+	source = 'blog',
+} = Astro.props;
+---
+
+<section class="lead-box" data-source={source}>
+	<div class="lead-box__inner">
+		<div class="lead-box__content">
+			<span class="badge badge--blog">🚀 Auditoría gratis</span>
+			<h3 class="lead-box__title">{title}</h3>
+			<p class="lead-box__desc">{desc}</p>
+		</div>
+
+		<form class="lead-box__form" data-lead-form>
+			<div class="lead-box__grid">
+				<label class="lead-box__field">
+					<span>Tu nombre</span>
+					<input type="text" name="name" placeholder="Ej: Denis" required />
+				</label>
+
+				<label class="lead-box__field">
+					<span>Tu WhatsApp</span>
+					<input
+						type="tel"
+						name="phone"
+						placeholder="Ej: 0981 123 456"
+						required
+					/>
+				</label>
+			</div>
+
+			<label class="lead-box__field">
+				<span>¿Qué tipo de negocio tenés?</span>
+				<input
+					type="text"
+					name="business"
+					placeholder="Ej: Veterinaria, taller, restaurante..."
+					required
+				/>
+			</label>
+
+			<label class="lead-box__field">
+				<span>¿Qué necesitás?</span>
+				<select name="need">
+					<option value="No estoy seguro todavía"
+						>No estoy seguro todavía</option
+					>
+					<option value="Landing page">Landing page</option>
+					<option value="Página web completa">Página web completa</option>
+					<option value="SEO / aparecer en Google"
+						>SEO / aparecer en Google</option
+					>
+					<option value="Rediseñar mi web actual"
+						>Rediseñar mi web actual</option
+					>
+				</select>
+			</label>
+
+			<button type="submit" class="btn btn--primary btn--lg lead-box__submit">
+				{buttonText}
+			</button>
+
+			<p class="lead-box__note">
+				Te vamos a responder por WhatsApp con una recomendación clara para tu
+				negocio.
+			</p>
+		</form>
+	</div>
+</section>

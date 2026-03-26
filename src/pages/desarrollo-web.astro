@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig, getWhatsAppUrl } from '../data/siteConfig';
+---
+
+<BaseLayout
+	title="Desarrollo web en Paraguay | Páginas rápidas y profesionales"
+	description="Desarrollo web en Paraguay con código limpio, rápido y optimizado para SEO."
+	canonical={`${siteConfig.url}/desarrollo-web/`}
+	navbarSolid={true}>
+	<main class="seo-page">
+		<div class="container container--narrow">
+			<h1>Desarrollo web en Paraguay para tu negocio</h1>
+
+			<p>Creamos páginas web rápidas, seguras y optimizadas para Google.</p>
+
+			<h2>¿Qué usamos?</h2>
+			<ul>
+				<li>HTML5</li>
+				<li>CSS3</li>
+				<li>JavaScript</li>
+			</ul>
+
+			<h2>Ventajas</h2>
+			<ul>
+				<li>⚡ Carga rápida</li>
+				<li>🔍 SEO desde el código</li>
+				<li>📱 Responsive</li>
+			</ul>
+
+			<h2>¿Por qué elegirnos?</h2>
+			<p>
+				No usamos WordPress ni sistemas pesados. Todo está optimizado para
+				rendimiento y SEO.
+			</p>
+
+			<div class="seo-cta">
+				<h2>¿Necesitás una web profesional?</h2>
+				<p>Hacemos páginas que cargan rápido y venden</p>
+
+				<a
+					href={getWhatsAppUrl()}
+					class="btn btn--white btn--lg"
+					target="_blank">
+					💬 WhatsApp
+				</a>
+			</div>
+		</div>
+	</main>
+</BaseLayout>

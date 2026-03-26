@@ -1,0 +1,128 @@
+---
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import { siteConfig } from '../data/siteConfig';
+import '../styles/global.css';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+
+interface Props {
+	title?: string;
+	description?: string;
+	canonical?: string;
+	ogImage?: string;
+	noindex?: boolean;
+	type?: 'website' | 'article';
+	schema?: object | object[];
+	lang?: string;
+	navbarSolid?: boolean;
+}
+
+const {
+	title = siteConfig.seo.defaultTitle,
+	description = siteConfig.seo.defaultDescription,
+	canonical = siteConfig.url,
+	ogImage = siteConfig.seo.ogImage,
+	noindex = false,
+	type = 'website',
+	schema,
+	lang = 'es-PY',
+	navbarSolid = false,
+} = Astro.props;
+
+const fullTitle = title.includes(siteConfig.name)
+	? title
+	: `${title} | ${siteConfig.name}`;
+
+const robots = noindex ? 'noindex, nofollow' : 'index, follow';
+
+const professionalServiceSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'ProfessionalService',
+	name: siteConfig.name,
+	url: siteConfig.url,
+	description: siteConfig.seo.defaultDescription,
+	telephone: `+${siteConfig.whatsapp}`,
+	email: siteConfig.email,
+	priceRange: 'Gs. 800.000 – Gs. 3.800.000',
+	address: {
+		'@type': 'PostalAddress',
+		addressLocality: siteConfig.address.city,
+		addressCountry: 'PY',
+	},
+	areaServed: {
+		'@type': 'Country',
+		name: 'Paraguay',
+	},
+	openingHoursSpecification: {
+		'@type': 'OpeningHoursSpecification',
+		dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+		opens: '08:00',
+		closes: '18:00',
+	},
+	sameAs: [siteConfig.socials?.instagram, siteConfig.socials?.facebook].filter(
+		Boolean
+	),
+};
+
+const schemas = schema
+	? Array.isArray(schema)
+		? [professionalServiceSchema, ...schema]
+		: [professionalServiceSchema, schema]
+	: [professionalServiceSchema];
+---
+
+<!doctype html>
+<html lang={lang}>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="generator" content={Astro.generator} />
+
+		<title>{fullTitle}</title>
+		<meta name="description" content={description} />
+		<meta name="robots" content={robots} />
+		<link rel="canonical" href={canonical} />
+
+		<meta name="theme-color" content="#0a1628" />
+
+		<link rel="icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="manifest" href="/site.webmanifest" />
+
+		<meta property="og:type" content={type} />
+		<meta property="og:locale" content="es_PY" />
+		<meta property="og:site_name" content={siteConfig.name} />
+		<meta property="og:title" content={fullTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={ogImage} />
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={fullTitle} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
+
+		{
+			schemas.map((item) => (
+				<script type="application/ld+json" set:html={JSON.stringify(item)} />
+			))
+		}
+	</head>
+
+	<body
+		data-whatsapp={siteConfig.whatsapp}
+		data-whatsapp-message={siteConfig.whatsappMessage}>
+		<a href="#main-content" class="skip-link">Ir al contenido principal</a>
+
+		<Navbar solid={navbarSolid} />
+
+		<main id="main-content">
+			<slot />
+		</main>
+
+		<Footer />
+		<WhatsAppFloat />
+
+		<script src="/main.js" defer></script>
+	</body>
+</html>

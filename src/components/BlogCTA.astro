@@ -1,0 +1,28 @@
+---
+import { getWhatsAppUrl } from '../data/siteConfig';
+
+const {
+	title = '¿Querés una web que te genere clientes?',
+	desc = 'Creamos páginas web rápidas, optimizadas y listas para vender desde el día 1.',
+	buttonText = '💬 Consultar por WhatsApp',
+	message = null,
+	variant = 'primary', // primary | dark
+} = Astro.props;
+
+const waUrl = getWhatsAppUrl(message);
+---
+
+<section class={`blog-cta blog-cta--${variant}`}>
+	<div class="blog-cta__box">
+		<h2 class="blog-cta__title">{title}</h2>
+		<p class="blog-cta__desc">{desc}</p>
+
+		<a
+			href={waUrl}
+			target="_blank"
+			rel="noopener noreferrer"
+			class="btn btn--primary btn--lg blog-cta__btn">
+			{buttonText}
+		</a>
+	</div>
+</section>

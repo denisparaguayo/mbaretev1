@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { siteConfig } from '../../../data/siteConfig';
+import { getCollection } from 'astro:content';
+import BlogGrid from '../../../components/blog/BlogGrid.astro';
+import BlogSidebar from '../../../components/blog/BlogSidebar.astro';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog', ({ data }) => !data.draft);
+
+	const categories = [
+		...new Map(
+			posts
+				.filter((post) => post.data.category && post.data.categorySlug)
+				.map((post) => [
+					post.data.categorySlug,
+					{
+						slug: post.data.categorySlug,
+						name: post.data.category,
+					},
+				])
+		).values(),
+	];
+
+	return categories.map((category) => ({
+		params: { slug: category.slug },
+		props: { category },
+	}));
+}
+
+const { category } = Astro.props;
+
+const allPosts = (await getCollection('blog'))
+	.filter((post) => !post.data.draft)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const categoryPosts = allPosts.filter(
+	(post) => post.data.categorySlug === category.slug
+);
+
+const categories = [
+	...new Map(
+		allPosts
+			.filter((post) => post.data.category && post.data.categorySlug)
+			.map((post) => [
+				post.data.categorySlug,
+				{
+					name: post.data.category,
+					slug: post.data.categorySlug,
+				},
+			])
+	).values(),
+];
+
+const categorySchema = {
+	'@context': 'https://schema.org',
+	'@type': 'CollectionPage',
+	name: `${category.name} | Blog de Mbarete Digital`,
+	description: `Artículos de la categoría ${category.name} en el blog de Mbarete Digital.`,
+	url: `${siteConfig.url}/blog/categoria/${category.slug}/`,
+};
+---
+
+<BaseLayout
+	title={`${category.name} | Blog`}
+	description={`Artículos de la categoría ${category.name} en el blog de Mbarete Digital.`}
+	canonical={`${siteConfig.url}/blog/categoria/${category.slug}/`}
+	schema={categorySchema}
+	navbarSolid={true}>
+	<section
+		class="section section--white blog-home"
+		aria-labelledby="category-title">
+		<div class="container">
+			<div class="blog-home__hero fade-up">
+				<nav class="blog-post__breadcrumb" aria-label="Breadcrumb">
+					<a href="/">Inicio</a>
+					<span>›</span>
+					<a href="/blog/">Blog</a>
+					<span>›</span>
+					<span>{category.name}</span>
+				</nav>
+
+				<span class="badge badge--blog">📂 Categoría</span>
+				<h1 class="section__title" id="category-title">{category.name}</h1>
+				<p class="section__subtitle">
+					Artículos de {category.name} para ayudarte a mejorar la presencia digital
+					de tu negocio.
+				</p>
+			</div>
+
+			<div class="blog-home__layout">
+				<div class="blog-home__main fade-up">
+					<BlogGrid posts={categoryPosts} />
+				</div>
+
+				<div class="blog-home__side fade-up">
+					<BlogSidebar posts={allPosts} categories={categories} />
+				</div>
+			</div>
+		</div>
+	</section>
+</BaseLayout>

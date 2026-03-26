@@ -1,0 +1,153 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { siteConfig } from '../../data/siteConfig';
+import { getCollection, render } from 'astro:content';
+import BlogGrid from '../../components/blog/BlogGrid.astro';
+import BlogCTA from '../../components/BlogCTA.astro';
+import LeadBox from '../../components/LeadBox.astro';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog', ({ data }) => !data.draft);
+
+	return posts.map((post) => {
+		const slug = post.id.replace(/\.(md|mdx)$/, '');
+
+		return {
+			params: { slug },
+			props: { post },
+		};
+	});
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const slug = post.id.replace(/\.(md|mdx)$/, '');
+const canonical = `${siteConfig.url}/blog/${slug}/`;
+
+const allPosts = (await getCollection('blog'))
+	.filter((item) => !item.data.draft && item.id !== post.id)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const sameCategory = allPosts.filter(
+	(item) =>
+		item.data.categorySlug &&
+		post.data.categorySlug &&
+		item.data.categorySlug === post.data.categorySlug
+);
+
+const fallbackPosts = allPosts.filter(
+	(item) => !sameCategory.some((related) => related.id === item.id)
+);
+
+const relatedPosts = [...sameCategory, ...fallbackPosts].slice(0, 3);
+
+const articleSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Article',
+	headline: post.data.title,
+	description: post.data.description,
+	datePublished: post.data.pubDate.toISOString(),
+	dateModified: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+	author: {
+		'@type': 'Organization',
+		name: siteConfig.name,
+	},
+	publisher: {
+		'@type': 'Organization',
+		name: siteConfig.name,
+	},
+	mainEntityOfPage: canonical,
+};
+---
+
+<BaseLayout
+	title={post.data.title}
+	description={post.data.description}
+	canonical={canonical}
+	type="article"
+	schema={articleSchema}
+	navbarSolid={true}>
+	<article class="blog-post">
+		<div class="container container--narrow">
+			<header class="blog-post__header fade-up">
+				<nav class="blog-post__breadcrumb" aria-label="Breadcrumb">
+					<a href="/">Inicio</a>
+					<span>›</span>
+					<a href="/blog/">Blog</a>
+					<span>›</span>
+					<span>{post.data.title}</span>
+				</nav>
+
+				{
+					post.data.category ? (
+						<span class="badge badge--blog blog-post__badge">
+							{post.data.category}
+						</span>
+					) : null
+				}
+
+				<h1 class="blog-post__title">{post.data.title}</h1>
+				<p class="blog-post__desc">{post.data.description}</p>
+
+				<div class="blog-post__meta">
+					<time datetime={post.data.pubDate.toISOString()}>
+						📅 {post.data.pubDate.toLocaleDateString('es-PY')}
+					</time>
+
+					{
+						post.data.tags?.length > 0 && (
+							<div class="blog-post__tags">
+								{post.data.tags.map((tag) => (
+									<span class="blog-post__tag">#{tag}</span>
+								))}
+							</div>
+						)
+					}
+				</div>
+			</header>
+
+			{
+				post.data.heroImage && (
+					<div class="blog-post__hero fade-up">
+						<img
+							src={post.data.heroImage}
+							alt={post.data.title}
+							loading="eager"
+						/>
+					</div>
+				)
+			}
+
+			<div class="blog-post__content fade-up">
+				<Content />
+			</div>
+			<LeadBox
+				source={`blog:${slug}`}
+				title="¿Querés saber qué tipo de web necesita tu negocio?"
+				desc="Completá estos datos y te orientamos por WhatsApp con una recomendación clara."
+			/>
+
+			<BlogCTA
+				message={`Hola Mbarete Digital! Estuve leyendo "${post.data.title}" y quiero una web para mi negocio 👋`}
+			/>
+
+			{
+				relatedPosts.length > 0 && (
+					<section class="blog-related fade-up" aria-labelledby="related-title">
+						<div class="blog-related__header">
+							<span class="badge badge--blog">📚 Seguí leyendo</span>
+							<h2 id="related-title">Artículos relacionados</h2>
+							<p>
+								Más contenido útil para seguir mejorando la presencia digital de
+								tu negocio.
+							</p>
+						</div>
+
+						<BlogGrid posts={relatedPosts} />
+					</section>
+				)
+			}
+		</div>
+	</article>
+</BaseLayout>

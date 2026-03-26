@@ -1,0 +1,100 @@
+---
+import { siteConfig, getWhatsAppUrl } from '../data/siteConfig';
+---
+
+<footer class="footer" id="footer" role="contentinfo">
+	<div class="container">
+		<div class="footer__grid">
+			<div class="footer__brand">
+				<a href="/#inicio" class="footer__logo" aria-label={siteConfig.name}>
+					<span aria-hidden="true">⚡</span>
+					{siteConfig.name}
+				</a>
+				<p class="footer__slogan">Tu negocio, visible en internet.</p>
+				<p class="footer__desc">
+					Agencia de diseño web para PyMEs paraguayas. Páginas web profesionales
+					desde Gs. 800.000.
+				</p>
+			</div>
+
+			<nav class="footer__nav" aria-label="Navegación del footer">
+				<h3 class="footer__nav-title">Links rápidos</h3>
+				<ul role="list">
+					<li><a href="/#inicio">Inicio</a></li>
+					<li><a href="/#servicios">Servicios</a></li>
+					<li><a href="/#precios">Precios</a></li>
+					<li><a href="/#faq">FAQ</a></li>
+					<li><a href="/#contacto">Contacto</a></li>
+				</ul>
+			</nav>
+
+			<div class="footer__contact">
+				<h3 class="footer__nav-title">Contacto</h3>
+				<ul role="list">
+					<li>
+						<a
+							href={getWhatsAppUrl()}
+							id="footer-wa"
+							aria-label="WhatsApp"
+							target="_blank"
+							rel="noopener noreferrer">
+							📱 {siteConfig.phone}
+						</a>
+					</li>
+					<li>
+						<a href={`mailto:${siteConfig.email}`}>
+							✉️ {siteConfig.email}
+						</a>
+					</li>
+					<li>
+						<a href={siteConfig.url} target="_blank" rel="noopener">
+							🌐 {siteConfig.url.replace('https://', '')}
+						</a>
+					</li>
+					<li>
+						<span>
+							📍 {siteConfig.address.city}, {siteConfig.address.country}
+						</span>
+					</li>
+					<li>
+						<span>
+							🕐 {siteConfig.hours.days} · {siteConfig.hours.time}
+						</span>
+					</li>
+				</ul>
+			</div>
+
+			<div class="footer__social">
+				<h3 class="footer__nav-title">Seguinos</h3>
+				<div class="footer__social-links">
+					<a
+						href={siteConfig.socials.instagram}
+						class="footer__social-btn"
+						aria-label={`Instagram de ${siteConfig.name}`}
+						target="_blank"
+						rel="noopener noreferrer">
+						<span aria-hidden="true">📸</span> Instagram
+					</a>
+
+					<a
+						href={siteConfig.socials.facebook}
+						class="footer__social-btn"
+						aria-label={`Facebook de ${siteConfig.name}`}
+						target="_blank"
+						rel="noopener noreferrer">
+						<span aria-hidden="true">👍</span> Facebook
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="footer__bottom">
+			<p>
+				© 2025 {siteConfig.name} · {siteConfig.address.city}, {
+					siteConfig.address.country
+				}
+				· Diseñado con ❤️ en Paraguay 🇵🇾
+			</p>
+		</div>
+	</div>
+</footer>

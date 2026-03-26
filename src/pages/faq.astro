@@ -1,0 +1,195 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig, getWhatsAppUrl } from '../data/siteConfig';
+
+const faqItems = [
+	{
+		question: '¿Cuánto tarda en estar lista mi página web?',
+		answer:
+			'El Plan Básico se entrega en 1 a 2 días hábiles desde que recibimos tus datos y el pago. El Plan Estándar tarda de 4 a 8 días hábiles y el Plan Pro de 7 a 15 días hábiles, según la complejidad del proyecto.',
+	},
+	{
+		question: '¿Qué necesito para empezar?',
+		answer:
+			'Solo necesitás el nombre de tu negocio, tus datos de contacto, tu número de WhatsApp, una breve lista de servicios o productos y el pago del plan elegido. Si tenés fotos o logo, mejor todavía. Si no, te ayudamos igual.',
+	},
+	{
+		question: '¿Necesito saber algo de tecnología para tener mi página?',
+		answer:
+			'No. Nosotros hacemos todo el trabajo técnico. Vos solo nos pasás la información de tu negocio y nosotros nos encargamos del diseño, la estructura, la publicación y la optimización básica.',
+	},
+	{
+		question: '¿La página se va a ver bien en celular?',
+		answer:
+			'Sí. Todas nuestras páginas están adaptadas para celulares, tablets y computadoras. Esto es clave porque la mayoría de tus clientes te va a buscar desde el teléfono.',
+	},
+	{
+		question: '¿La página va a aparecer en Google?',
+		answer:
+			'Sí. Todas las páginas incluyen SEO básico de arranque para que Google pueda encontrarlas. Además, ofrecemos un servicio mensual de SEO local para negocios que quieren mejorar su posición en búsquedas y Google Maps.',
+	},
+	{
+		question: '¿Qué incluye el SEO básico?',
+		answer:
+			'Incluye estructura optimizada, títulos y descripciones SEO, velocidad cuidada, marcado técnico y configuración inicial para que tu página tenga una base sólida para aparecer en Google.',
+	},
+	{
+		question: '¿Qué diferencia hay entre SEO básico y SEO local mensual?',
+		answer:
+			'El SEO básico viene incluido al crear la web y es el punto de partida. El SEO local mensual es un trabajo continuo para mejorar posiciones en Google, Google Maps, palabras clave locales, fichas y visibilidad de tu negocio en búsquedas de tu zona.',
+	},
+	{
+		question: '¿Qué incluye el Plan Básico?',
+		answer:
+			'Incluye una landing page completa, diseño adaptado a celular, botón de WhatsApp, SEO básico, mapa de ubicación, hosting por 12 meses, dominio incluido por 1 año y 1 cambio de contenido por mes.',
+	},
+	{
+		question: '¿Qué incluye el Plan Estándar?',
+		answer:
+			'Incluye todo lo del Básico, más hasta 4 secciones organizadas, diseño más completo, SEO avanzado, Google Maps, formulario de contacto al email, menú de navegación y 3 cambios de contenido por mes.',
+	},
+	{
+		question: '¿Qué incluye el Plan Pro?',
+		answer:
+			'Incluye todo lo del Estándar, más páginas internas por servicio, blog o noticias, galería avanzada, formulario personalizado, cambios ilimitados durante 12 meses, hosting premium y configuración completa de Google.',
+	},
+	{
+		question: '¿Cuál es el mejor plan para mi negocio?',
+		answer:
+			'Depende de cuánto necesitás mostrar. Si querés una página simple y rápida, el Básico funciona muy bien. Si necesitás más secciones, galería o formulario, el Estándar suele ser el más equilibrado. Si querés posicionarte mejor, tener varias páginas internas y crecer en serio, el Pro es la mejor opción.',
+	},
+	{
+		question: '¿Incluyen dominio y hosting?',
+		answer:
+			'Sí. Nuestros planes incluyen dominio por 1 año y hosting por 12 meses. Después de ese período, ambos se renuevan anualmente.',
+	},
+	{
+		question: '¿Puedo usar mi propio dominio?',
+		answer:
+			'Sí. Si ya tenés dominio, podemos revisar si se puede usar con tu nueva web. Si todavía no tenés, nosotros te ayudamos a registrarlo.',
+	},
+	{
+		question: '¿Qué pasa si quiero cambiar algo después?',
+		answer:
+			'Todos los planes incluyen cambios mensuales. El Básico incluye 1 cambio por mes, el Estándar 3 cambios por mes y el Pro cambios ilimitados durante 12 meses.',
+	},
+	{
+		question: '¿Puedo tener catálogo de productos o menú digital?',
+		answer:
+			'Sí. Ofrecemos un extra opcional de catálogo digital o menú, ideal para restaurantes, panaderías, carnicerías, ferreterías, ropa y otros rubros. No es una tienda online, pero sí una lista visual con foto, precio y botón de pedido por WhatsApp.',
+	},
+	{
+		question: '¿Hacen tienda online con carrito y pagos?',
+		answer:
+			'No está incluida en estos planes base. Si necesitás e-commerce, pagos online, reservas automáticas o sistemas más complejos, eso se cotiza aparte.',
+	},
+	{
+		question: '¿Puedo pagar en cuotas?',
+		answer:
+			'Sí. El Plan Pro puede pagarse en 2 cuotas. Los demás planes se coordinan según el alcance y la forma de pago acordada.',
+	},
+	{
+		question: '¿Qué formas de pago aceptan?',
+		answer: 'Aceptamos efectivo, transferencia bancaria y billetera digital.',
+	},
+	{
+		question: '¿También ayudan con Google Maps?',
+		answer:
+			'Sí. En los planes más completos y en el servicio de SEO local trabajamos la presencia de tu negocio en Google Maps y Google Business para mejorar tu visibilidad local.',
+	},
+	{
+		question: '¿Atienden solo en Asunción?',
+		answer:
+			'No. Trabajamos con negocios de Asunción y de todo Paraguay. La atención es online y por WhatsApp, así que podemos avanzar sin problema estés donde estés.',
+	},
+	{
+		question: '¿Cómo me contacto con ustedes?',
+		answer: `Podés escribirnos directamente por WhatsApp al ${siteConfig.phone}, enviar un email a ${siteConfig.email} o usar el botón de contacto de la web.`,
+	},
+];
+
+const faqSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'FAQPage',
+	mainEntity: faqItems.map((item) => ({
+		'@type': 'Question',
+		name: item.question,
+		acceptedAnswer: {
+			'@type': 'Answer',
+			text: item.answer,
+		},
+	})),
+};
+---
+
+<BaseLayout
+	title="Preguntas frecuentes | Mbarete Digital"
+	description="Respondemos las preguntas más frecuentes sobre páginas web, precios, tiempos de entrega, SEO, dominio, hosting y soporte en Paraguay."
+	canonical={`${siteConfig.url}/faq/`}
+	schema={faqSchema}
+	navbarSolid={true}>
+	<section
+		class="section section--white faq-page"
+		aria-labelledby="faq-page-title">
+		<div class="container container--narrow">
+			<div class="faq-page__hero fade-up">
+				<span class="badge badge--py">📘 FAQ</span>
+				<h1 class="section__title" id="faq-page-title">Preguntas frecuentes</h1>
+				<p class="section__subtitle">
+					Todo lo que necesitás saber antes de contratar tu página web con
+					Mbarete Digital.
+				</p>
+			</div>
+
+			<div class="faq-page__intro fade-up">
+				<p>
+					Sabemos que antes de invertir en una página web surgen muchas dudas:
+					cuánto cuesta, cuánto tarda, qué incluye, si aparece en Google o qué
+					necesitás para empezar. En esta página respondemos las preguntas más
+					comunes para que tomes una decisión con claridad.
+				</p>
+			</div>
+
+			<div class="faq-list fade-up" role="list">
+				{
+					faqItems.map((item, index) => (
+						<div class="faq-item" role="listitem">
+							<button
+								class="faq-item__question"
+								aria-expanded="false"
+								aria-controls={`faq-${index + 1}`}>
+								{item.question}
+								<span class="faq-item__chevron" aria-hidden="true">
+									▼
+								</span>
+							</button>
+							<div
+								class="faq-item__answer"
+								id={`faq-${index + 1}`}
+								role="region">
+								<p>{item.answer}</p>
+							</div>
+						</div>
+					))
+				}
+			</div>
+
+			<div class="faq-page__cta fade-up">
+				<h2>¿No encontraste tu respuesta?</h2>
+				<p>
+					Escribinos y te respondemos por WhatsApp de forma directa, sin vueltas
+					y sin tecnicismos.
+				</p>
+				<a
+					href={getWhatsAppUrl(
+						'Hola Mbarete Digital! Estuve viendo la página de preguntas frecuentes y quiero hacer una consulta 👋'
+					)}
+					class="btn btn--primary btn--lg"
+					target="_blank"
+					rel="noopener noreferrer">
+					💬 Consultar por WhatsApp
+				</a>
+			</div>
+		</div>
+	</section>
+</BaseLayout>

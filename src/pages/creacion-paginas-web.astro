@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig, getWhatsAppUrl } from '../data/siteConfig';
+---
+
+<BaseLayout
+	title="Creación de páginas web en Paraguay | Desde Gs. 800.000"
+	description="Creación de páginas web en Paraguay desde Gs. 800.000. Diseño profesional, SEO incluido y entrega en 1-2 días."
+	canonical={`${siteConfig.url}/creacion-paginas-web/`}
+	navbarSolid={true}>
+	<main class="seo-page">
+		<div class="container container--narrow">
+			<h1>Creación de páginas web en Paraguay para negocios reales</h1>
+
+			<p>
+				¿Necesitás una <strong>página web en Paraguay</strong>? Creamos páginas
+				profesionales desde Gs. 800.000 con SEO incluido.
+			</p>
+
+			<h2>¿Cómo funciona?</h2>
+			<ul>
+				<li>Nos mandás los datos</li>
+				<li>Diseñamos tu página</li>
+				<li>Te entregamos lista</li>
+			</ul>
+
+			<h2>Tipos de páginas</h2>
+
+			<h3>Landing page</h3>
+			<p>Ideal para empezar. Entrega en 1-2 días.</p>
+
+			<h3>Web estándar</h3>
+			<p>Más secciones y mejor SEO.</p>
+
+			<h3>Web completa</h3>
+			<p>Incluye blog, galería y más.</p>
+
+			<div class="seo-cta">
+				<h2>¿Querés tu página web?</h2>
+				<p>Escribinos ahora y empezamos hoy</p>
+
+				<a
+					href={getWhatsAppUrl()}
+					class="btn btn--white btn--lg"
+					target="_blank">
+					💬 WhatsApp
+				</a>
+			</div>
+		</div>
+	</main>
+</BaseLayout>

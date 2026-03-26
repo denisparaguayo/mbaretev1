@@ -1,0 +1,55 @@
+---
+interface Props {
+	solid?: boolean;
+}
+
+const { solid = false } = Astro.props;
+---
+
+<nav
+	class={`navbar ${solid ? 'navbar--solid scrolled' : ''}`}
+	id="navbar"
+	role="navigation"
+	aria-label="Menú principal">
+	<div class="navbar__container">
+		<a
+			href="/#inicio"
+			class="navbar__logo"
+			aria-label="Mbarete Digital - Inicio">
+			<span class="navbar__logo-icon" aria-hidden="true">⚡</span>
+			<span class="navbar__logo-text">Mbarete Digital</span>
+		</a>
+
+		<button
+			class="navbar__hamburger"
+			id="hamburger"
+			aria-label="Abrir menú"
+			aria-expanded="false"
+			aria-controls="nav-links">
+			<span class="hamburger__bar"></span>
+			<span class="hamburger__bar"></span>
+			<span class="hamburger__bar"></span>
+		</button>
+
+		<ul class="navbar__links" id="nav-links" role="list">
+			<li><a href="/#servicios" class="navbar__link">Servicios</a></li>
+			<li><a href="/#precios" class="navbar__link">Precios</a></li>
+			<li><a href="/#rubros" class="navbar__link">Rubros</a></li>
+			<li>
+				<a href="/muestras/" class="navbar__link navbar__link--highlight"
+					>✨ Muestras</a>
+			</li>
+			<li><a href="/blog/" class="navbar__link">Blog</a></li>
+			<li><a href="/faq/" class="navbar__link">FAQ</a></li>
+			<li><a href="/#contacto" class="navbar__link">Contacto</a></li>
+		</ul>
+
+		<a
+			href="#"
+			class="btn btn--whatsapp navbar__cta"
+			id="navbar-wa"
+			aria-label="Contactar por WhatsApp">
+			<span aria-hidden="true">💬</span> WhatsApp
+		</a>
+	</div>
+</nav>
